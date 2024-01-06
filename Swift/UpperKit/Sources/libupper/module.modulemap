@@ -1,0 +1,7 @@
+module libupper [system] {
+    header "libupper.h"
+    
+    link "upper"
+    
+    export *
+}
