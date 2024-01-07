@@ -5,16 +5,12 @@ import Foundation
 
 let libupperPath = URL(fileURLWithPath: #file)
     .deletingLastPathComponent()
-    .appending(path: "Sources")
-    .appending(path: "libupper")
+    .appendingPathComponent("Sources")
+    .appendingPathComponent("libupper")
     .path
 
 let package = Package(
     name: "UpperKit",
-    
-    platforms: [
-        .macOS(.v14)
-    ],
     
     products: [
         .library(

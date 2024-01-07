@@ -5,10 +5,6 @@ import PackageDescription
 let package = Package(
     name: "UpperApp",
     
-    platforms: [
-        .macOS(.v14)
-    ],
-    
     dependencies: [
         .package(path: "../UpperKit")
     ],
