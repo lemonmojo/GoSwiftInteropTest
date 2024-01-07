@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+set -e
+
+cd Swift/UpperKit
+
+swift package clean
+swift build
+
+cd ../..
 cd Swift/UpperApp
 
+swift package clean
 swift run

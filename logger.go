@@ -25,27 +25,33 @@ extern void logger_log(
 */
 import "C"
 
-var loggerCreateFunc C.logger_create_func
-var loggerDestroyFunc C.logger_destroy_func
-var loggerLogFunc C.logger_log_func
+var _loggerCreateFunc C.logger_create_func
+var _loggerDestroyFunc C.logger_destroy_func
+var _loggerLogFunc C.logger_log_func
 
 //export logger_configure
 func logger_configure(create C.logger_create_func,
 	destroy C.logger_destroy_func,
 	log C.logger_log_func) {
-	loggerCreateFunc = create
-	loggerDestroyFunc = destroy
-	loggerLogFunc = log
+	_loggerCreateFunc = create
+	_loggerDestroyFunc = destroy
+	_loggerLogFunc = log
 }
 
-func logger_create() C.logger_t {
-	return C.logger_create(loggerCreateFunc)
+type Logger struct {
+	logger C.logger_t
 }
 
-func logger_destroy(logger C.logger_t) {
-	C.logger_destroy(loggerDestroyFunc, logger)
+func (l Logger) Log(message string) {
+	C.logger_log(_loggerLogFunc, l.logger, C.CString(message))
 }
 
-func logger_log(logger C.logger_t, message string) {
-	C.logger_log(loggerLogFunc, logger, C.CString(message))
+func (l Logger) Close() {
+	C.logger_destroy(_loggerDestroyFunc, l.logger)
+}
+
+func NewLogger() Logger {
+	return Logger{
+		logger: C.logger_create(_loggerCreateFunc),
+	}
 }

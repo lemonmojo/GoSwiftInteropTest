@@ -8,9 +8,9 @@ import "C"
 
 //export test_callback
 func test_callback(number C.int, cb C.callbackFunc) {
-	logger := logger_create()
-	logger_log(logger, "Hello from Logger")
-	logger_destroy(logger)
+	logger := NewLogger()
+	logger.Log("Hello from Logger! 🥳")
+	logger.Close()
 
 	C.call_callbackFunc(cb, number)
 }
