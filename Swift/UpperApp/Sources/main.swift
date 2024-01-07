@@ -1,6 +1,8 @@
 import Foundation
 import UpperKit
 
+let services = GoServices.shared
+
 let uppercaser = Uppercaser()
 
 let input = "abc"
