@@ -7,6 +7,11 @@ import (
 
 //export uppercase_string
 func uppercase_string(input *C.char) *C.char {
+	logger := NewLogger()
+	defer logger.Close()
+
+	logger.Log("Hello from uppercase_string in golang! 🥳")
+
 	inputGo := C.GoString(input)
 	upperGo := strings.ToUpper(inputGo)
 	upperC := C.CString(upperGo)
