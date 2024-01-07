@@ -2,6 +2,7 @@ package main
 
 import (
 	"C"
+	"fmt"
 	"strings"
 )
 
@@ -15,6 +16,8 @@ func uppercase_string(input *C.char) *C.char {
 	inputGo := C.GoString(input)
 	upperGo := strings.ToUpper(inputGo)
 	upperC := C.CString(upperGo)
+
+	logger.Log(fmt.Sprintf("uppercase_string Input: \"%s\"; Output: \"%s\"", inputGo, upperGo))
 
 	return upperC
 }
