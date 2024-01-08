@@ -2,9 +2,7 @@ import Foundation
 import libupper
 
 public struct Uppercaser {
-    public init() { }
-    
-    public func uppercase(_ input: String) -> String {
+    public static func uppercase(_ input: String) -> String {
         let output = input.withCString { cStringPtr in
             let cStringPtrMutable = UnsafeMutablePointer(mutating: cStringPtr)
             

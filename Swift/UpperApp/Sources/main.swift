@@ -1,17 +1,21 @@
 import Foundation
 import UpperKit
 
-let services = GoServices.shared
-
-let uppercaser = Uppercaser()
+// Ensure all services that are used by Go are set up
+GoServices.configure()
 
 let input = "abc"
-let output = uppercaser.uppercase(input)
+let output = Uppercaser.uppercase(input)
 
 print("Input: \(input)")
 print("Output: \(output)")
 
-let callbackTest = CallbackTest()
-let number: Int32 = 5
-
-callbackTest.call(number: number)
+CallbackTest.call(number: 5) { number in
+    let expectedNumber = 5
+    
+    guard number == expectedNumber else {
+        fatalError("\(number) != \(expectedNumber)")
+    }
+    
+    print("Callback called with number \(number)")
+}

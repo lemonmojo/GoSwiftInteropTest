@@ -1,10 +1,16 @@
 import Foundation
 import libupper
 
-public struct GoServices {
-    public static let shared = GoServices()
-    
-    init() {
+public struct GoServices { }
+
+public extension GoServices {
+    static func configure() {
+        configureLogger()
+    }
+}
+
+private extension GoServices {
+    static func configureLogger() {
         logger_configure { // create
             let newLogger = Logger()
             let newLoggerUnmanaged = Unmanaged.passRetained(newLogger)
