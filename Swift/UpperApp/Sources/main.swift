@@ -4,11 +4,13 @@ import UpperKit
 // Ensure all services that are used by Go are set up
 GoServices.configure()
 
+let logger = Logger()
+
 let input = "abc"
 let output = Uppercaser.uppercase(input)
 
-print("Input: \(input)")
-print("Output: \(output)")
+logger.log("Input: \(input)", .info)
+logger.log("Output: \(output)", .info)
 
 CallbackTest.call(number: 5) { number in
     let expectedNumber = 5
@@ -17,5 +19,5 @@ CallbackTest.call(number: 5) { number in
         fatalError("\(number) != \(expectedNumber)")
     }
     
-    print("Callback called with number \(number)")
+    logger.log("Callback called with number \(number)", .info)
 }

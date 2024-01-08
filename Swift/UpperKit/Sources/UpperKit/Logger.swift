@@ -4,14 +4,42 @@ public class Logger {
     public static let shared = Logger()
     
     public init() {
-        log("[DEBUG] Initializing Logger")
+        log("Initializing Logger", .debug)
     }
     
-    public func log(_ message: String) {
-        print(message)
+    public func log(_ message: String,
+                    _ level: Level) {
+        let prefix = level.prefix
+        let fullMessage = "\(prefix) \(message)"
+        
+        print(fullMessage)
     }
     
     deinit {
-        log("[DEBUG] Deinitializing Logger")
+        log("Deinitializing Logger", .debug)
+    }
+}
+
+public extension Logger {
+    enum Level: UInt32 {
+        case debug
+        case info
+        case warn
+        case error
+    }
+}
+
+fileprivate extension Logger.Level {
+    var prefix: String {
+        switch self {
+            case .debug:
+                "[DEBUG]"
+            case .info:
+                "[INFO]"
+            case .warn:
+                "[WARN]"
+            case .error:
+                "[ERROR]"
+        }
     }
 }

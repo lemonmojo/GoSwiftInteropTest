@@ -2,11 +2,12 @@ package main
 
 /*
 typedef void* logger_t;
+typedef unsigned int LogLevel_t;
 
 typedef logger_t (*logger_create_func)(void);
 typedef void (*logger_destroy_func)(logger_t logger);
 
-typedef void (*logger_log_func)(logger_t logger, const char*);
+typedef void (*logger_log_func)(logger_t logger, const char*, LogLevel_t);
 
 static logger_t logger_create(logger_create_func f) {
     return f();
@@ -16,8 +17,8 @@ static void logger_destroy(logger_destroy_func f, logger_t logger) {
     f(logger);
 }
 
-static void logger_log(logger_log_func f, logger_t logger, const char* message) {
-    f(logger, message);
+static void logger_log(logger_log_func f, logger_t logger, const char* message, LogLevel_t logLevel) {
+    f(logger, message, logLevel);
 }
 */
 import "C"
@@ -27,9 +28,18 @@ type Logger struct {
 	loggerPtr C.logger_t
 }
 
+type LogLevel uint32
+
+const (
+	LogLevelDebug LogLevel = 0
+	LogLevelInfo  LogLevel = 1
+	LogLevelWarn  LogLevel = 2
+	LogLevelError LogLevel = 3
+)
+
 // public
-func (l Logger) Log(message string) {
-	C.logger_log(_loggerDelegate.logFunc, l.loggerPtr, C.CString(message))
+func (l Logger) Log(message string, logLevel LogLevel) {
+	C.logger_log(_loggerDelegate.logFunc, l.loggerPtr, C.CString(message), C.uint(logLevel))
 }
 
 // public

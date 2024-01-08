@@ -24,7 +24,7 @@ private extension GoServices {
             
             let loggerUnmanaged = Unmanaged<Logger>.fromOpaque(loggerC)
             loggerUnmanaged.release()
-        } _: { loggerC, messageC in // log
+        } _: { loggerC, messageC, logLevelC  in // log
             guard let loggerC,
                   let messageC else {
                 return
@@ -35,7 +35,11 @@ private extension GoServices {
             
             let message = String(cString: messageC)
             
-            logger.log(message)
+            guard let logLevel = Logger.Level(rawValue: logLevelC) else {
+                fatalError("Invalid log level: \(logLevelC)")
+            }
+            
+            logger.log(message, logLevel)
         }
     }
 }
