@@ -1,8 +1,11 @@
 package main
 
 /*
-typedef void (*callbackFunc)(int);
-extern void call_callbackFunc(callbackFunc f, int number);
+typedef void (*callbackFunc) (int number);
+
+static void call_callbackFunc(callbackFunc f, int number) {
+    f(number);
+}
 */
 import "C"
 

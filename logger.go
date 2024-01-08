@@ -8,20 +8,26 @@ typedef void (*logger_destroy_func)(logger_t logger);
 
 typedef void (*logger_log_func)(logger_t logger, const char*);
 
-extern logger_t logger_create(
+static logger_t logger_create(
 	logger_create_func f
-);
+) {
+    return f();
+}
 
-extern void logger_destroy(
+static void logger_destroy(
 	logger_destroy_func f,
 	logger_t logger
-);
+) {
+    f(logger);
+}
 
-extern void logger_log(
+static void logger_log(
 	logger_log_func f,
 	logger_t logger,
 	const char* message
-);
+) {
+    f(logger, message);
+}
 */
 import "C"
 
